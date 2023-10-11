@@ -29,3 +29,15 @@ box-shadow: 1px 1px 4px 1px gray;
     align-self: center;
     min-width: 20vw;
 }
+
+.card-list{
+    display: flex;
+}
+
+.card-list-item.player{
+    margin-left: calc(6vw - 150px);
+}
+
+.card-list-item.opponent{
+    margin-right: calc(6vw - 150px);
+}
