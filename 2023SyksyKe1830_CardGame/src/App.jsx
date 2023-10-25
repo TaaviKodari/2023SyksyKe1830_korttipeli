@@ -1,5 +1,6 @@
 import './App.css'
 import Card from './components/Card';
+import PlayButton from './components/PlayButton';
 import { useState } from 'react';
 
 const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min +1) + min);
@@ -28,12 +29,21 @@ const createCard = (index) =>({
 const deck = Array(16).fill(null).map((_,index) => createCard(index))
 const half = Math.ceil(deck.length /2);
 const dealCards = () =>{
+  shuffle(deck);
   return{
     player: deck.slice(0,half),
     opponent: deck.slice(half)
   }
-
 }
+
+function shuffle(array){
+  for(let i = array.length -1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export default function App(){
   
   const [result, setResult] = useState('');
@@ -71,11 +81,11 @@ export default function App(){
         
         <div className='center-area'>
           <p>{result || 'Press the button'}</p>
-          <button onClick={compareCards} type="button">Play</button>
+          <PlayButton text={'Play'} handleClick={compareCards} />
         </div>
 
         <div className='hand opponent'>
-          <ul className='card-list'>
+          <ul className='card-list opponent'>
             {cards.opponent.map(oCard =>(
               <li className='card-list-item opponent' key={oCard.id}>
                 <Card card ={oCard}/>
