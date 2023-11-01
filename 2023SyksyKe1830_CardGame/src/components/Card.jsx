@@ -1,5 +1,7 @@
 
 export default function Card({card}){
+  if(!card) return<div className="card back"/>;
+
     return(
         <div className="card">
             <img src = {card.image}/>

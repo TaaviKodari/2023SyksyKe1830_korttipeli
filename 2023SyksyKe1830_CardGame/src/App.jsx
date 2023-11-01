@@ -47,8 +47,9 @@ function shuffle(array){
 export default function App(){
   
   const [result, setResult] = useState('');
-  const[cards, setCards] = useState(dealCards);
-
+  const [cards, setCards] = useState(dealCards);
+  const [gameState, setGameState] = useState('play');
+  
   function compareCards(){
     const playerStat = cards.player[0].stats[0];
     const opponentStat = cards.opponent[0].stats[0];
@@ -62,18 +63,20 @@ export default function App(){
     else{
       setResult('Loss');
     }
-
+    setGameState('result');
   }
-
+  function nextRound(){
+    
+  }
   return(
     <>
       <h1>Hello World!</h1>
       <div className='game'>
         <div className='hand player'>
           <ul className='card-list'>
-            {cards.player.map(pCard =>(
+            {cards.player.map((pCard,index) =>(
               <li className='card-list-item player' key={pCard.id}>
-                <Card card ={pCard}/>
+                <Card card={ index === 0 ? pCard : null}/>
               </li>
             ))}
           </ul>
@@ -81,7 +84,13 @@ export default function App(){
         
         <div className='center-area'>
           <p>{result || 'Press the button'}</p>
-          <PlayButton text={'Play'} handleClick={compareCards} />
+          {
+            gameState === 'play' ? 
+            (<PlayButton text={'Play'} handleClick={compareCards} />)
+            :
+            (<PlayButton text={'Next'} handleClick={nextRound} />)
+          }
+          
         </div>
 
         <div className='hand opponent'>
