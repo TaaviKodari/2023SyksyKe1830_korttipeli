@@ -51,6 +51,10 @@ export default function App(){
   const [gameState, setGameState] = useState('play');
   const [selectedStat, setSelected] = useState(0);
 
+  if(gameState !== 'game_over' && (!cards.opponent.length || !cards.player.length)){
+    
+  }
+
   function compareCards(){
     const playerStat = cards.player[0].stats[selectedStat];
     const opponentStat = cards.opponent[0].stats[selectedStat];
@@ -95,6 +99,12 @@ export default function App(){
     setGameState('play');
     setResult('')
   }
+
+  function restartGame(){
+    setCards(dealCards);
+    setResult('');
+    setGameState('play');
+  }
   return(
     <>
       <h1>Hello World!</h1>
@@ -117,6 +127,9 @@ export default function App(){
           {
             gameState === 'play' ? 
             (<PlayButton text={'Play'} handleClick={compareCards} />)
+            :
+            gameState === 'game_over' ? 
+            (<PlayButton text={'Restart'} handleClick={restartGame}/>)
             :
             (<PlayButton text={'Next'} handleClick={nextRound} />)
           }
